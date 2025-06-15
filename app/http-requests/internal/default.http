@@ -1,0 +1,9 @@
+### GET request to example server
+GET {{localhost}}/default
+Content-Type: application/json
+
+{
+    "custom_data": "testdata"
+}
+
+###

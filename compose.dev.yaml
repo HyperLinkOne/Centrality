@@ -1,0 +1,7 @@
+services:
+## NGINX
+  nginx:
+    ports:
+      - "9081:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

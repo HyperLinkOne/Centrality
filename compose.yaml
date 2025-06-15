@@ -1,7 +1,6 @@
 services:
 ## PHP
   php:
-    container_name: php
     extra_hosts:
       - "host.docker.internal:host-gateway"
     build:
@@ -12,9 +11,6 @@ services:
         ENV: ${ENV:-development}
     volumes:
       - ./app:/var/www/html
-      - ./docker/dev/php/entrypoint.sh:/usr/local/bin/entrypoint.sh
-    environment:
-      PERSONAL_ENV_VAR: "unfug"
     depends_on:
       - postgres
     networks:
@@ -22,23 +18,20 @@ services:
 ## NGINX
   nginx:
     image: nginx:alpine
-    container_name: nginx
     volumes:
       - ./app:/var/www/html
       - ./docker/dev/nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
-      - "9081:80"
+      - "80:80"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
       - php
     networks:
       - dev_net
-## Database
 ## postgres
   postgres:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
-    container_name: "postgres"
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-defaultpassword}
@@ -54,11 +47,6 @@ services:
       - dev_net
     volumes:
       - ./data/postgres_data:/var/lib/postgresql/data:rw
-#      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-#      # - ./docker/db/data:/var/lib/postgresql/data:rw
-#volumes:
-#  postgres_data:
-
 networks:
   dev_net:
     name: dev_net

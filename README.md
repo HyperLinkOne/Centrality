@@ -40,12 +40,15 @@
 
 ## Symfony setup
 ### use this commands in the container 
-```shell
- composer create-project symfony/skeleton .
- chown -R 1000 .
+
+```
+   composer create-project symfony/skeleton .
+
+   chown -R 1000 .
 ```
 
 ### used Bundles
+* `composer req --dev debug`
 * composer require symfony/maker-bundle --dev  # nicht unbedingt nötig
 * composer require twig   # nur wenn man auch Webausgaben mit Templates will 
 * Webprofile (debug)

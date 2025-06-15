@@ -1,4 +1,4 @@
-ARG PHP_VERSION=${PHP_VERSION:-8.2}
+ARG PHP_VERSION=${PHP_VERSION:-8.4}
 FROM php:${PHP_VERSION}-fpm
 ENV TZ={$PHP_TIMEZONE:-'Europe/Berlin'}
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
@@ -31,13 +31,6 @@ RUN apt-get update && apt-get -y install curl git && apt-get clean \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer 
 
 COPY docker/dev/php/*.ini /usr/local/etc/php/conf.d/
-
-# Kopiere das entrypoint.sh Skript in das Image
-# COPY docker/dev/php/entrypoint.sh /usr/local/bin/entrypoint.sh
-# Stelle sicher, dass das Skript ausführbar ist
-# RUN chmod +x /usr/local/bin/entrypoint.sh
-# Definiere das entrypoint Skript
-#ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 WORKDIR /var/www/html
 EXPOSE 9000

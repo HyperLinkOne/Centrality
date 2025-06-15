@@ -1,5 +1,4 @@
 #!/bin/bash
-
 SHELL:=/bin/bash
 PROJECT=php
 
@@ -7,13 +6,8 @@ PROJECT=php
 
 .PHONY: build up down exec start stop restart
 
-DOCKER_COMPOSE_COMMAND := @docker-compose -f ${PWD}/compose.yaml 
 
-# check if enfironment is dev or prod to use different env-file for creation just like
-# $(ENVIRONMENT) == 'dev'
-#
-# DOCKER_COMPOSE_COMMAND := @docker compose --env-file app/.env.local -f ${PWD}/compose.yaml
-# until then  use password etc from compose.yaml
+DOCKER_COMPOSE_COMMAND := @docker compose -f ${PWD}/compose.yaml  -f ${PWD}/compose.dev.yaml
 
 UNAME_S := $(shell uname -s)
 
@@ -23,16 +17,9 @@ help: ## Show this help.
 #####################
 ###  Development  ###
 #####################
-
-#ifeq ($(UNAME_S),Linux)
-#	$(shell sed -i 's/    platform: linux\/arm64\/v8//g' ${PWD}/compose.yaml)
-#endif
-
-build: ## Build the development environment
-    ${DOCKER_COMPOSE_COMMAND}
-
-# ${DOCKER_COMPOSE_COMMAND} build
-#	${DOCKER_COMPOSE_COMMAND} exec ${PROJECT} composer install
+build: ## build docker image
+	${DOCKER_COMPOSE_COMMAND} up -d  --build
+	${DOCKER_COMPOSE_COMMAND} exec ${PROJECT} composer install
 
 up: ## just up
 	${DOCKER_COMPOSE_COMMAND} up -d
@@ -51,3 +38,6 @@ start: ## Start the container
 
 restart: ## Restart the container
 	${DOCKER_COMPOSE_COMMAND} restart  ${PROJECT}
+
+echo: ##just echo
+	@echo ${DOCKER_COMPOSE_COMMAND}
