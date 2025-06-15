@@ -1,7 +1,8 @@
 # Symfony Project
 ## Informations
-* purpose of Centrality are explained here: [readme](infos/Readme.md)   
-* Architecture here: [architecture](infos/Architecture.md)   
+* purpose of Centrality are explained here: [readme](docs/Readme.md)   
+* Architecture here: [architecture](docs/Architecture.md)
+* Installation hints here [installation](docs/Installation.md)
 
 ## Structure
 
