@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./docker/dev/php/Dockerfile
       args:
-        PHP_VERSION: ${PHP_VERSION:-8.2}
+        PHP_VERSION: ${PHP_VERSION:-8.4}
         ENV: ${ENV:-development}
     volumes:
       - ./app:/var/www/html
@@ -21,8 +21,7 @@ services:
     volumes:
       - ./app:/var/www/html
       - ./docker/dev/nginx/nginx.conf:/etc/nginx/nginx.conf
-    ports:
-      - "80:80"
+    ports: []
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:

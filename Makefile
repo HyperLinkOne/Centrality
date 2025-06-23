@@ -18,6 +18,7 @@ help: ## Show this help.
 ###  Development  ###
 #####################
 build: ## build docker image
+	cp .env.dev .env
 	${DOCKER_COMPOSE_COMMAND} up -d  --build
 	${DOCKER_COMPOSE_COMMAND} exec ${PROJECT} composer install
 
